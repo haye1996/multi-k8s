@@ -1,0 +1,15 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t haitongye/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run -e CI=true haitongye/react-test npm test
+
+after_success:
+  - docker build -t haitongye/multi-client ./client
+  - docker build -t haitongye/multi-nginx ./nginx
+  - docker build -t haitongye/multi-server ./server
+  - docker build -t haitongye/multi-worker ./worker
