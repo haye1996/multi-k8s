@@ -13,3 +13,10 @@ after_success:
   - docker build -t haitongye/multi-nginx ./nginx
   - docker build -t haitongye/multi-server ./server
   - docker build -t haitongye/multi-worker ./worker
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them to docker hub
+  - docker push haitongye/multi-client
+  - docker push haitongye/multi-nginx
+  - docker push haitongye/multi-server
+  - docker push haitongye/multi-worker
